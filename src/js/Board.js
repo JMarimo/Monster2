@@ -82,3 +82,4 @@ export default class Board {
     this.clearsInterval();
     alert('Вы проиграли');
   }
+}

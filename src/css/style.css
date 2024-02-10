@@ -22,7 +22,7 @@ body {
 }
 
 .field_active {
-    cursor: url('../img/molotok.png'), pointer;
+    cursor: url('../img/hammer.png'), pointer;
     background-image: url('../img/goblin.png');
     background-size: contain;
 }
