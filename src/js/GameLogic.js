@@ -68,10 +68,10 @@ export default class GameLogic {
                 this.hitCounter.textContent = `Попаданий: ${this.score}`
                 this.goblin.removeGoblinClass()
                 setTimeout(() => {
-                    this.placeGoblin() 
-                }, 2000) 
+                    this.placeGoblin()
+                }, 2000)
                 clearInterval(this.intervalId)
-                this.moveGoblin() 
+                this.moveGoblin()
             } else {
                 this.missCount++
                 this.lostCounter.textContent = `Промахов: ${this.missCount}`
