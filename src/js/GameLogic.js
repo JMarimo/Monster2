@@ -42,8 +42,22 @@ export default class GameLogic {
         return this.cells[randomCell].element
     }
 
+    debounce(func, wait) {
+        let timeout;
+        return function() {
+            const context = this;
+            const args = arguments;
+            const later = function() {
+                timeout = null;
+                func.apply(context, args);
+            };
+            clearTimeout(timeout);
+            timeout = setTimeout(later, wait);
+        };
+    }
+
     moveGoblin() {
-        this.placeGoblin()
+        this.debounceMoveGoblin = this.debounce(this.moveGoblin, 2000); 
 
         this.intervalId = setInterval(() => {
             this.placeGoblin()
@@ -61,22 +75,21 @@ export default class GameLogic {
     }
 
     handleGoblinClick() {
-        this.gameContainer.addEventListener('click', (event) => {
-            const goblinCell = event.target
+        this.gameContainer.addEventListener('click', () => {
+            const goblinCell = event.target;
             if (goblinCell.classList.contains('goblin-active')) {
-                this.score++
-                this.hitCounter.textContent = `Попаданий: ${this.score}`
-                this.goblin.removeGoblinClass()
+                this.score++;
+                this.hitCounter.textContent = `Попаданий: ${this.score}`;
+                this.goblin.removeGoblinClass();
                 setTimeout(() => {
-                    this.placeGoblin()
-                }, 2000)
-                clearInterval(this.intervalId)
-                this.moveGoblin()
+                    this.placeGoblin();
+                }, 2000);
+                this.debounceMoveGoblin(); 
             } else {
-                this.missCount++
-                this.lostCounter.textContent = `Промахов: ${this.missCount}`
+                this.missCount++;
+                this.lostCounter.textContent = `Промахов: ${this.missCount}`;
             }
-        })
+        });
     }
 
     endGame() {
